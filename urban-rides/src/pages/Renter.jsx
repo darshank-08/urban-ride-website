@@ -575,7 +575,7 @@ const Renter = () => {
                 />
               ))
             ) : (
-              <p>No cars available right now.</p>
+              <p style={{ color: "black" }}>No cars available right now.</p>
             )}
           </div>
         )}
