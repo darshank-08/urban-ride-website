@@ -20,7 +20,7 @@ const Renter = () => {
   const [stars, setStars] = useState(0);
   const [review, setReview] = useState(false);
   const [comment, setComment] = useState(""); 
-  const [ratingMap, setRatingMap] = useState([]);
+  const [ratingMap, setRatingMap] = useState({});
   const [bookingClick, setBookingClick] = useState(false);
 
   const Name = localStorage.getItem("user")
@@ -205,6 +205,8 @@ const Renter = () => {
     fetchRatings();
   }, []);
 
+  // Filter Functions
+
   const filterByPrice = (car) => {
     if (!priceRange) return true;
     const price = car.pricePerDay;
@@ -235,6 +237,8 @@ const Renter = () => {
       filterByPrice(car) &&
       filterBySeats(car)
   );
+
+  // Navigation Handlers
 
   const handleReviewClick = () => {
     setOpen(false);
@@ -337,6 +341,49 @@ const Renter = () => {
           )}
           {!bookingClick && !review && <p>Choose the perfect ride for your journey.</p>}
         </div>
+
+        {!bookingClick && !review && (
+          <div className={styles.filters}>
+            <input
+              type="text"
+              placeholder="Location"
+              className={styles.input}
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+
+            <select
+              className={styles.select}
+              value={priceRange}
+              onChange={(e) => setPriceRange(e.target.value)}
+            >
+              <option value="">Price</option>
+              <option value="0-2000">Below 2000</option>
+              <option value="2000-3000">2000 - 3000</option>
+              <option value="3000-5000">3000 - 5000</option>
+              <option value="5000+">5000+</option>
+            </select>
+
+            <select
+              className={styles.select}
+              value={seats}
+              onChange={(e) => setSeats(e.target.value)}
+            >
+              <option value="">Seats</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6+">6+</option>
+            </select>
+
+            <input
+              type="text"
+              placeholder="Brand (e.g. BMW)"
+              className={styles.input}
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+            />
+          </div>
+        )}
 
         {bookingClick ? (
           myBookings && myBookings.length > 0 ? (
