@@ -54,7 +54,7 @@ const SignupNavbar = ({ onSelect }) => {
         }`}
         onClick={() => handleSelect("Employee")}
       >
-        Employee
+        Admin
       </div>
 
       {showSuperAdmin && (
