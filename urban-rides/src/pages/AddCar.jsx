@@ -104,7 +104,7 @@ const AddCar = () => {
         document: documentUrl
       };
 
-      const res = await fetch("https://urban-rides.onrender.com/car/add", {
+      const res = await fetch("https://urban-rides.onrender.com/Owner/add-cars", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
