@@ -6,6 +6,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const [userType, setUserType] = useState("Renter");
+  console.log("Selected user type:", userType);
 
   const [data, setData] = useState({
     fullName: "",
@@ -58,10 +59,34 @@ const Signup = () => {
 
     setLoading(true);
 
-    const userAPI = {
-      testApi: "http://localhost:8080/sign-up/",
-      prodApi: "https://urban-rides.onrender.com/sign-up/"
+    //Switching between test and production APIs
+    const owner = {
+      testApi: "http://localhost:8080/sign-up/owner",
+      prodAPI: "https://urban-rides.onrender.com/sign-up/owner"
     };
+
+    const renter = {
+      testApi: "http://localhost:8080/sign-up/renter",
+      prodAPI: "https://urban-rides.onrender.com/sign-up/renter"
+    };
+
+    const admin = {
+      testApi: "http://localhost:8080/sign-up/admin",
+      prodAPI: "https://urban-rides.onrender.com/sign-up/admin"
+    };
+
+    if (userType === "Renter") {
+      var testAPI = renter.testApi;
+      var prodAPI = renter.prodAPI;
+    } else if (userType === "Owner") {
+      var testAPI = owner.testApi;
+      var prodAPI = owner.prodAPI;
+    } else {
+      var testAPI = admin.testApi;
+      var prodAPI = admin.prodAPI;
+    }
+
+    console.log(testAPI, prodAPI);
 
     const payload = {
       fullName: data.fullName.trim(),
@@ -71,16 +96,9 @@ const Signup = () => {
       gender: data.gender
     };
 
-    const api =
-      userType === "Renter"
-        ? userAPI.prodApi + "renter"
-        : userAPI.prodApi + "owner";
-
-        console.log("Payload:", payload);
-        console.log("API Endpoint:", api);
 
     try {
-      const res = await fetch(api, {
+      const res = await fetch(prodAPI, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
